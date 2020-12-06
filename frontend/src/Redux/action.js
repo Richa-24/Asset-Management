@@ -76,4 +76,8 @@ export const assetRequestCallById = (payload) => (dispatch) => {
         });
 };
 
+export const sortCards = (payload) => (dispatch) => {
+    return dispatch({ type: "SORT_CARD", payload });
+};
+
 

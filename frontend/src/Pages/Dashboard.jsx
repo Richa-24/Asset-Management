@@ -1,79 +1,85 @@
-import React, { useState, useEffect } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-// import { useDrag, useDrop } from 'react-dnd'
-import { useSelector, useDispatch } from 'react-redux';
-import { assetsRequestCall } from '../Redux/action';
-import { Card, CardContent, Grid, Container } from '@material-ui/core';
+import React, { useState, useEffect } from "react";
+import CardDrag from "./Card";
+import { useDrag, useDrop } from "react-dnd";
+import { useSelector, useDispatch } from "react-redux";
+import { assetsRequestCall, sortCards } from "../Redux/action";
+import { Card, CardContent, Container, Button } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
-import EditDeleteOnHover from '../Components/EditDeleteOnHover';
-import { Link } from 'react-router-dom';
 
-const useStyles = makeStyles({
+import EditDeleteOnHover from "../Components/EditDeleteOnHover";
+import { Link } from "react-router-dom";
+import Navbar from "../Components/Navbar";
+
+const useStyles = makeStyles((theme) => ({
     root: {
-        height: 250,
         display: 'flex',
-        flexWrap: 'wrap',
-        float: "left",
-        margin: "25px"
-    }
+        float: 'left',
+        width: 300,
+        margin: '30px'
 
-});
+    }
+}));
 
 export default function Dashboard() {
-    const classes = useStyles();
-    const dispatch = useDispatch()
-    const { lists } = useSelector((state) => state)
-    const [isHovering, setIsHovering] = useState(false)
-    // const [{ isDragging }, drag] = useDrag({
-    //     item: { type: any },
-    //     colect: (monitor) => ({
-    //         isDragging: !!monitor.isDragging()
-    //     })
-    // })
+    const classes = useStyles()
+    const dispatch = useDispatch();
+    const { lists } = useSelector((state) => state);
+    const [isHovering, setIsHovering] = useState(false);
+    const [updatedList, setUpdateList] = useState(lists || [])
 
     useEffect(() => {
-        dispatch(assetsRequestCall())
-    }, [])
-    console.log(lists)
+        dispatch(assetsRequestCall());
+
+    }, []);
+
+    useEffect(() => {
+        setUpdateList(lists)
+    }, [lists])
+
 
     const handleMouseHover = (id) => {
-        setIsHovering(!isHovering)
-        console.log(id)
+        setIsHovering(!isHovering);
+        console.log(id);
+    };
+
+    const moveCard = (id, index) => {
+        const cards = lists;
+        const sourceCard = cards.find((card) => card.id === id);
+        const sortedCards = cards.filter((card) => card.id !== id);
+
+        sortedCards.splice(index, 0, sourceCard);
+        setUpdateList(sortedCards)
+
+    };
+
+    const saveOrder = () => {
+        dispatch(sortCards(updatedList));
+    }
+
+    const handleCancle = () => {
+        setUpdateList(lists)
     }
 
     return (
         <>
-            {lists.map((item) => {
+            <Navbar />
+            <div>
+                <button onClick={saveOrder}>Save</button>
+                <button onClick={handleCancle}>Cancel</button>
+            </div>
+            {updatedList.map((item, i) => {
                 return (
                     <Container>
                         <CardContent>
-                            {/* <DndProvider backend={HTML5Backend}> */}
-
-                            <Card className={classes.root}
-                            // ref={drag} style={{
-                            //     opacity: isDragging ? 0.5 : 1,
-                            //     fontSize: 25,
-                            //     fontWeight: 'bold',
-                            //     cursor: 'move',
-                            // }}
-                            >
-                                <div style={{ display: "flex" }}>
-                                    <Link to={`/${item.id}`} ><img src={item.imageURL} alt={item.title} width="300px" height="220px"
-                                        onMouseEnter={() => handleMouseHover(item.id)}
-                                        onMouseLeave={() => handleMouseHover(item.id)} />
-                                    </Link>
-
-                                    <div>
-                                        {isHovering ? <EditDeleteOnHover /> : null}
-                                    </div>
-                                </div>
-                            </Card>
-                            {/* </DndProvider> */}
+                            <Container>
+                                <Card className={classes.root}>
+                                    <CardDrag index={i} moveCard={moveCard} item={item} />
+                                </Card>
+                            </Container>
                         </CardContent>
                     </Container>
-                )
+                );
             })}
         </>
-    )
+    );
 }

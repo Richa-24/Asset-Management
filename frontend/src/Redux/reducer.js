@@ -18,6 +18,11 @@ const reducer = (state = initState, { type, payload }) => {
             return {
                 ...state,
             };
+        case "SORT_CARD":
+            return {
+                ...state,
+                lists: payload
+            }
 
         case GET_ASSETS_SUCCESS:
             console.log(payload)
