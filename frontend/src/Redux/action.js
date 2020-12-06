@@ -69,7 +69,7 @@ export const assetRequestCallById = (payload) => (dispatch) => {
         .get(`https://5fbcebcf3f8f90001638c720.mockapi.io/api/v1/assets/${payload}`)
         .then((res) => {
             console.log(res)
-            dispatch(assetSuccessId(res));
+            dispatch(assetSuccessId(res.data));
         })
         .catch((err) => {
             dispatch(assetFailureId(err?.response?.data?.message));
