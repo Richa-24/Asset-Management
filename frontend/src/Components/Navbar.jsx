@@ -26,7 +26,7 @@ export default function Navbar() {
                     <Typography variant="h6" className={classes.title}>
                         Asset Manager
                     </Typography>
-                    <Link to="/addImage" ><img src="add-image.png" alt="addImage" className={classes.image} /></Link>
+                    <Link to="/add" ><img src="add-image.png" alt="addImage" className={classes.image} /></Link>
                 </Toolbar>
             </AppBar>
         </>

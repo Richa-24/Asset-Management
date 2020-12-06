@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import Navbar from '../Components/Navbar'
+// import Navbar from '../Components/Navbar'
 import { assetRequestCallById } from '../Redux/action'
 import { Container, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
@@ -55,13 +55,14 @@ export default function ImageDetails(props) {
     const dispatch = useDispatch()
     const { imageDetails } = useSelector((state) => state)
 
+    console.log(imageDetails)
     useEffect(() => {
         let id = props.match.params.id
         dispatch(assetRequestCallById(id))
     }, [])
     return (
         <>
-            <Navbar />
+            {/* <Navbar /> */}
             <Container>
                 <div className={classes.mainDiv}>
                     <div >
@@ -83,10 +84,10 @@ export default function ImageDetails(props) {
                     <div>
                         <div className={classes.commentHeading}>
                             <div><SupervisedUserCircleOutlinedIcon className={classes.commentIcon} /></div>
-                            <Typography variant="h5" component="h2" className={classes.name}>{imageDetails.comments[0].name}</Typography>
+                            {/* <Typography variant="h5" component="h2" className={classes.name}>{imageDetails.comments[0].name}</Typography> */}
                         </div>
                     </div>
-                    <p style={{ marginLeft: "80px", fontSize: "20px" }}>{imageDetails.comments[0].comment}</p>
+                    {/* <p style={{ marginLeft: "80px", fontSize: "20px" }}>{imageDetails.comments[0].comment}</p> */}
                 </div>
             </Container>
         </>

@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         float: 'left',
-        width: 300,
-        margin: '30px'
+        width: 350,
+        margin: '10px'
 
     }
 }));
@@ -63,17 +63,13 @@ export default function Dashboard() {
     return (
         <>
             <Navbar />
-            <div>
-                <button onClick={saveOrder}>Save</button>
-                <button onClick={handleCancle}>Cancel</button>
-            </div>
             {updatedList.map((item, i) => {
                 return (
                     <Container>
                         <CardContent>
                             <Container>
                                 <Card className={classes.root}>
-                                    <CardDrag index={i} moveCard={moveCard} item={item} />
+                                    <CardDrag index={i} moveCard={moveCard} item={item} onMouseEnter />
                                 </Card>
                             </Container>
                         </CardContent>

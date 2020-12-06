@@ -63,9 +63,9 @@ export const assetFailureId = (payload) => {
     }
 }
 
-export const assetRequestCallById = (payload) => (dispatch) => {
+export const assetRequestCallById = (payload) => async (dispatch) => {
     dispatch(assetRequestId(payload));
-    return axios
+    return await axios
         .get(`https://5fbcebcf3f8f90001638c720.mockapi.io/api/v1/assets/${payload}`)
         .then((res) => {
             console.log(res)
