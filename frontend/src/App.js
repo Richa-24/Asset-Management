@@ -9,9 +9,9 @@ function App() {
   return (
     <div>
       <Route path="/" exact render={(props) => < Dashboard {...props} />} />
-      <Route path="/:id" exact render={(props) => < ImageDetails {...props} />} />
-      <Route path="/add" render={(props) => < AddImage {...props} />} />
-      <Route path="/edit/:id" render={(props) => < EditImage {...props} />} />
+      <Route path="/add" exact render={(props) => < AddImage {...props} />} />
+      <Route path="/edit/:id" exact render={(props) => < EditImage {...props} />} />
+      <Route path="/view/:id" exact render={(props) => < ImageDetails {...props} />} />
     </div>
   );
 }
